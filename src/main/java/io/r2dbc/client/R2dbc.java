@@ -122,7 +122,14 @@ public final class R2dbc {
             .flatMapMany(handle -> Flux.from(
                 f.apply(handle))
                 .concatWith(ReactiveUtils.typeSafe(handle::close))
-                .onErrorResume(ReactiveUtils.appendError(handle::close)));
+                .onErrorResume(ReactiveUtils.appendError(handle::close))
+                .doFinally(s -> silently(handle.close())));
+    }
+
+    private static void silently(Publisher<?> close) {
+        Mono.from(close)
+                .onErrorResume(err -> Mono.empty())
+                .subscribe();
     }
 
 }
