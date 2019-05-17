@@ -242,29 +242,6 @@
                     </includes>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.jfrog.buildinfo</groupId>
-                <artifactId>artifactory-maven-plugin</artifactId>
-                <version>2.6.1</version>
-                <inherited>false</inherited>
-                <executions>
-                    <execution>
-                        <id>build-info</id>
-                        <goals>
-                            <goal>publish</goal>
-                        </goals>
-                        <configuration>
-                            <publisher>
-                                <contextUrl>https://sonatype.netifiinc.com/repository</contextUrl>
-                                <username>${env.ORG_GRADLE_PROJECT_netifiPublishUsername}</username>
-                                <password>${env.ORG_GRADLE_PROJECT_netifiPublishPassword}</password>
-                                <repoKey>netifi-maven-releases</repoKey>
-                                <snapshotRepoKey>netifi-maven-snapshots</snapshotRepoKey>
-                            </publisher>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
         <resources>
             <resource>
@@ -396,4 +373,16 @@
         </profile>
     </profiles>
 
+    <distributionManagement>
+        <snapshotRepository>
+            <id>netifi-snapshots</id>
+            <name>Netifi Snapshots</name>
+            <url>https://sonatype.netifiinc.com/repository/netifi-maven-snapshots/</url>
+        </snapshotRepository>
+        <repository>
+            <id>netifi-releases</id>
+            <name>Netifi Releases</name>
+            <url>https://sonatype.netifiinc.com/repository/netifi-maven-releases/</url>
+        </repository>
+    </distributionManagement>
 </project>
